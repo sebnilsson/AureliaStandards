@@ -39,12 +39,14 @@
     <Folder Include="wwwroot\**" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <Folder Remove="src\aurelia\app.html" />
+    <Content Include="src\**" />
+    <Content Include="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="src\aurelia\app.html" />
+    <None Include="wwwroot\content\styles.css" />
   </ItemGroup>
 
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">

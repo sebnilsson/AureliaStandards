@@ -13,6 +13,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
+    <link rel="stylesheet" href="~/content/styles.css" />
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -38,7 +39,7 @@
     <div class="body-content" style="padding-top: 5em;">
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="container">
             <p>&copy; 2017 - Sebastian Nilsson</p>
         </footer>
     </div>

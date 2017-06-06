@@ -4,7 +4,9 @@ import { Aurelia, PLATFORM } from 'aurelia-framework';
 export function configure(aurelia: Aurelia) {
     console.log('main.configuration');
 
-    aurelia.use.standardConfiguration();
+    aurelia.use
+        .standardConfiguration()
+        .developmentLogging();
 
     let appModuleName = PLATFORM.moduleName('app');
     console.log(`appModuleName: '${appModuleName}'`);

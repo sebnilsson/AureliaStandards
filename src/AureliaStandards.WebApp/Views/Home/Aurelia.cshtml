@@ -1,11 +1,13 @@
 @{
-    this.ViewData["Title"] = "Aurelia";
+    const string PageTitle = "Aurelia ToDo-app";
+
+    this.ViewData["Title"] = PageTitle;
 }
 
 <div class="container">
-    <h1>Aurelia: TODO-app</h1>
+    <h1>@PageTitle</h1>
 
-    <div aurelia-app="main">Loading...</div>
+    <div aurelia-app="main">Loading app...</div>
 </div>
 
 @section Scripts {

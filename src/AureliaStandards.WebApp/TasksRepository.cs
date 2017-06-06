@@ -9,25 +9,17 @@ namespace AureliaStandards.WebApp
     {
         private readonly HashSet<TaskItem> tasks = new HashSet<TaskItem>();
 
-        public void AddOrUpdate(TaskItem task)
+        public TaskItem AddOrUpdate(TaskItem task)
         {
             if (task == null)
             {
                 throw new ArgumentNullException(nameof(task));
             }
 
-            lock (this.tasks)
-            {
-                bool taskExists = this.tasks.Any(x => x.Id == task.Id);
-                if (taskExists)
-                {
-                    this.Update(task);
-                }
-                else
-                {
-                    this.Add(task);
-                }
-            }
+            task.Id = (task.Id != Guid.Empty) ? task.Id : Guid.NewGuid();
+            task.UpdatedAt = DateTime.UtcNow;
+
+            return this.AddOrUpdateInternal(task);
         }
 
         public bool ContainsId(Guid id)
@@ -112,9 +104,22 @@ namespace AureliaStandards.WebApp
             this.Remove(task);
         }
 
-        private void Add(TaskItem task)
+        internal TaskItem AddOrUpdateInternal(TaskItem task)
         {
-            this.tasks.Add(task);
+            lock (this.tasks)
+            {
+                bool taskExists = this.tasks.Any(x => x.Id == task.Id);
+                if (taskExists)
+                {
+                    this.Update(task);
+                }
+                else
+                {
+                    this.tasks.Add(task);
+                }
+            }
+
+            return task;
         }
 
         private TaskItem TryGetById(Guid id)

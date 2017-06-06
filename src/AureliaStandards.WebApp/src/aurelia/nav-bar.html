@@ -1,0 +1,7 @@
+﻿<template bindable="router">
+    <ul class="nav nav-tabs">
+        <li repeat.for="nav of router.navigation" class="${nav.isActive ? 'active' : ''}" role="presentation">
+            <a href.bind="nav.href">${nav.title}</a>
+        </li>
+    </ul>
+</template>

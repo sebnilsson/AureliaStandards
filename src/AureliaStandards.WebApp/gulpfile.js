@@ -19,7 +19,7 @@ gulp.task('watch', ['watch.aurelia']);
 
 gulp.task('build.aurelia',
     function() {
-        return gulp.src('./src/aurelia/')
+        return gulp.src(aureliaSrc)
             .pipe(gulpWebpack(aureliaWebpackConfig, webpack))
             .pipe(gulp.dest(aureliaDest));
     });

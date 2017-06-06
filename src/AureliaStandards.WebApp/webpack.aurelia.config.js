@@ -4,6 +4,7 @@ const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
 const TsConfigPathsPlugin = require('awesome-typescript-loader');
 
 const srcDir = path.resolve(__dirname, './src/aurelia/');
+const sharedDir = path.resolve(__dirname, './src/shared/');
 const distDir = path.resolve(__dirname, './wwwroot/dist/');
 const nodeModulesDir = path.resolve(__dirname, './node_modules');
 
@@ -22,7 +23,7 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
-        modules: [srcDir, 'node_modules']
+        modules: [sharedDir, srcDir, 'node_modules']
     },
     module: {
         rules: [

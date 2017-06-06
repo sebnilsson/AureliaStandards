@@ -7,6 +7,8 @@ namespace AureliaStandards.WebApp
         public TaskItem()
         {
             this.Id = Guid.NewGuid();
+            this.CreatedAt = DateTime.UtcNow;
+            this.UpdatedAt = DateTime.UtcNow;
         }
 
         public DateTime CreatedAt { get; set; }

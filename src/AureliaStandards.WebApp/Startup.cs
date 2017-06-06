@@ -90,7 +90,7 @@ namespace AureliaStandards.WebApp
         {
             var repository = new TasksRepository();
 
-            repository.AddOrUpdate(
+            repository.AddOrUpdateInternal(
                 new TaskItem
                     {
                         CreatedAt = DateTime.Now.AddHours(-1),
@@ -100,7 +100,7 @@ namespace AureliaStandards.WebApp
                         TitleText = "First task",
                         UpdatedAt = DateTime.Now.AddMinutes(-30)
                     });
-            repository.AddOrUpdate(
+            repository.AddOrUpdateInternal(
                 new TaskItem
                     {
                         CreatedAt = DateTime.Now.AddHours(-2),
@@ -110,7 +110,7 @@ namespace AureliaStandards.WebApp
                         TitleText = "Second task",
                         UpdatedAt = DateTime.Now.AddMinutes(-90)
                     });
-            repository.AddOrUpdate(
+            repository.AddOrUpdateInternal(
                 new TaskItem
                     {
                         CreatedAt = DateTime.Now.AddHours(-3),
@@ -120,7 +120,7 @@ namespace AureliaStandards.WebApp
                         TitleText = "Buy milk",
                         UpdatedAt = DateTime.Now.AddMinutes(-45)
                     });
-            repository.AddOrUpdate(
+            repository.AddOrUpdateInternal(
                 new TaskItem
                     {
                         CreatedAt = DateTime.Now.AddHours(-1),

@@ -1,0 +1,35 @@
+﻿<template>
+    <require from="./date-format"></require>
+    <require from="./date-format-relative"></require>
+
+    <h2>
+        <span class="${task.isDone ? 'strike-through' : ''}">
+            ${task.titleText}
+        </span>
+        <em if.bind="isDataLoading" class="small">(Loading...)</em>
+    </h2>
+    
+    <div if.bind="task">
+        <p class="small">
+            ID: <code>${task.id}</code>
+        </p>
+
+        <div class="well well-sm">
+            <div>
+                <strong>Created:</strong>
+                <em>${task.createdAt | dateFormatRelative & signal:'date-format-relative'}</em>
+                (${task.createdAt | dateFormat:'YYYY-MM-DD HH:mm:ss'})
+            </div>
+
+            <div>
+                <strong>Updated:</strong>
+                <em>${task.updatedAt | dateFormatRelative & signal:'date-format-relative'}</em>
+                (${task.updatedAt | dateFormat:'YYYY-MM-DD HH:mm:ss'})
+            </div>
+        </div>
+
+        <p if.bind="task.detailsText">
+            <pre if.bind="task.detailsText">${task.detailsText}</pre>
+        </p>
+    </div>
+</template>
