@@ -14,6 +14,8 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
     <link rel="stylesheet" href="~/content/styles.css" />
+    
+    @RenderSection("HtmlHead", required: false)
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -36,7 +38,7 @@
             </div>
         </div>
     </nav>
-    <div class="body-content" style="padding-top: 5em;">
+    <div class="body-content">
         @RenderBody()
         <hr />
         <footer class="container">

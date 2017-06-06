@@ -8,8 +8,6 @@ export class Details {
     private api: TasksApi;
 
     constructor(api: TasksApi) {
-        console.log('Details.constructor -- api:', api);
-
         this.api = api;
     }
 
@@ -17,9 +15,6 @@ export class Details {
     public task: ITaskItem;
 
     activate(params: any, routeConfig) {
-        console.log('Details.activate -- params: ', params);
-        console.log('Details.activate -- this.api: ', this.api);
-
         this.isDataLoading = true;
 
         let paramsId = params ? params.id : undefined;
@@ -33,9 +28,5 @@ export class Details {
                     this.isDataLoading = false;
                 });
         }
-    }
-
-    private getItem(id: string): void {
-        
     }
 }

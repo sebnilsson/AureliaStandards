@@ -1,0 +1,11 @@
+﻿.body-content {
+    padding-top: 5em;
+}
+
+.strike-through {
+    text-decoration: line-through;
+}
+
+.strike-through label {
+    text-decoration: line-through;
+}

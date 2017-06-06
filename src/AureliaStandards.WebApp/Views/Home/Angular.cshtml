@@ -1,3 +1,20 @@
 @{
-    this.ViewData["Title"] = "Angular";
+    const string PageTitle = "Angular ToDo-app";
+
+    this.ViewData["Title"] = PageTitle;
+}
+
+<div class="container">
+    <h1>@PageTitle</h1>
+
+    <app>Loading app...</app>
+</div>
+
+@section HtmlHead {
+    <base href="~/Angular"/>
+}
+
+@section Scripts {
+    @*<script type="text/javascript" src="~/dist/vendor.js" asp-append-version="true"></script>*@
+    <script type="text/javascript" src="~/dist/angular-app.js" asp-append-version="true"></script>
 }

@@ -1,9 +1,9 @@
 const path = require('path');
 
-const AureliaWebpackPlugin = require('aurelia-webpack-plugin');
-//const TsConfigPathsPlugin = require('awesome-typescript-loader');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const srcDir = path.resolve(__dirname, './src/aurelia/');
+const srcDir = path.resolve(__dirname, './src/angular/');
 const sharedDir = path.resolve(__dirname, './src/shared/');
 const distDir = path.resolve(__dirname, './wwwroot/dist/');
 const nodeModulesDir = path.resolve(__dirname, './node_modules');
@@ -14,7 +14,7 @@ const nodeModulesDir = path.resolve(__dirname, './node_modules');
 //console.log(`nodeModulesDir: '${nodeModulesDir}'`);
 
 module.exports = {
-    entry: { 'aurelia-app': ['aurelia-bootstrapper'] },
+    entry: { 'angular-app': ['./src/angular/main.ts'] },
     output: {
         path: distDir,
         publicPath: '/',
@@ -22,21 +22,30 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
-        modules: [sharedDir, srcDir, 'node_modules']
+        //modules: [sharedDir, srcDir, 'node_modules']
+        //modules: ['node_modules']
     },
     module: {
         rules: [
             {
                 test: /\.ts$/i,
-                loader: 'awesome-typescript-loader',
-                exclude: nodeModulesDir
+                loaders: [
+                    'awesome-typescript-loader',
+                    'angular2-template-loader?keepUrl=true'
+                ],
             },
             { test: /\.html$/i, use: 'html-loader' }
         ]
     },
     plugins: [
-        //new AureliaPlugin({ aureliaApp: 'main' })
-        new AureliaWebpackPlugin.AureliaPlugin({ 'aurelia-app': 'main' }),
-        //new TsConfigPathsPlugin(path.resolve(__dirname, './tsconfig.json'))
+        new CleanWebpackPlugin(
+            [
+                `${distDir}angular-app.js`,
+                `${distDir}templates`
+            ]
+        ),
+        new CopyWebpackPlugin([
+            { from: './src/angular/*.html', to: 'templates/', flatten: true }
+        ])
     ]
 };

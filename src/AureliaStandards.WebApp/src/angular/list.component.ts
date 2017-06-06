@@ -1,17 +1,21 @@
-﻿import { autoinject, computedFrom } from 'aurelia-framework';
+﻿import { Component } from "@angular/core";
 
-import { TasksApi } from './tasks-api';
-import { TasksData } from '../shared/tasks-data';
+import { TasksApiService } from './tasks-api.service';
+import { TasksData } from './tasks-data';
 import { ITaskItem } from '../shared/task-item';
 
-@autoinject
-export class List {
+@Component({
+    selector: 'list',
+    templateUrl: './dist/templates/list.component.html'
+    // TestABC
+})
+export class ListComponent {
     private _addTaskDetails: string;
-    private _addTaskTitle: string;
+    private _addTaskTitle: string = '';
     private _tasksData: TasksData;
 
     constructor(tasksData: TasksData,
-        private api: TasksApi) {
+        private api: TasksApiService) {
         this._tasksData = tasksData;
 
         if (!this._tasksData.items.length) {
@@ -19,7 +23,6 @@ export class List {
         }
     }
 
-    @computedFrom('_addTaskDetails')
     public get addTaskDetails(): string {
         return this._addTaskDetails;
     }
@@ -27,8 +30,7 @@ export class List {
     public set addTaskDetails(value: string) {
         this._addTaskDetails = value;
     }
-
-    @computedFrom('_addTaskTitle')
+    
     public get addTaskTitle(): string {
         return this._addTaskTitle;
     }
@@ -36,8 +38,7 @@ export class List {
     public set addTaskTitle(value: string) {
         this._addTaskTitle = value;
     }
-
-    @computedFrom('activeTasksItems')
+    
     public get activeTasksCount(): number {
         return this.activeTasksItems.length;
     }
@@ -45,8 +46,7 @@ export class List {
     public get activeTasksItems(): ITaskItem[] {
         return this._tasksData.items.filter(x => !x.isDone);
     }
-
-    @computedFrom('doneTaskItems')
+    
     public get doneTasksCount(): number {
         return this.doneTaskItems.length;
     }
@@ -62,9 +62,7 @@ export class List {
 
         this.api.add(this.addTaskTitle, this.addTaskDetails)
             .then(data => {
-                let task = (data.content as ITaskItem);
-
-                this._tasksData.items.push(task);
+                this._tasksData.items.push(data);
 
                 this.sortItems();
 
@@ -84,10 +82,7 @@ export class List {
 
         this.api.getAll()
             .then(data => {
-
-                let items = (data.content as ITaskItem[]);
-
-                items.forEach(x => this._tasksData.items.push(x));
+                data.forEach(x => this._tasksData.items.push(x));
 
                 this.sortItems();
             })
@@ -101,14 +96,12 @@ export class List {
 
         this.api.update(task)
             .then(data => {
-                let updatedTask = (data.content as ITaskItem);
-
-                let existingTask = this._tasksData.items.find(x => x.id === updatedTask.id);
+                let existingTask = this._tasksData.items.find(x => x.id === data.id);
                 if (existingTask) {
                     let index = this._tasksData.items.indexOf(existingTask);
 
                     if (index >= 0) {
-                        this._tasksData.items.splice(index, 1, updatedTask);
+                        this._tasksData.items.splice(index, 1, data);
                     }
                 }
 

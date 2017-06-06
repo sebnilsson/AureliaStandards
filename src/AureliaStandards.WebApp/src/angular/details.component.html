@@ -1,0 +1,30 @@
+﻿<h2>
+    <span *ngIf="task" class="{{task && task.isDone ? 'strike-through' : ''}}">
+        {{task.titleText}}
+    </span>
+    <em *ngIf="isDataLoading" class="small">(Loading...)</em>
+</h2>
+
+<div *ngIf="task">
+    <p class="small">
+        ID: <code>{{task.id}}</code>
+    </p>
+
+    <div class="well well-sm">
+        <div>
+            <strong>Created:</strong>
+            <em>{{task.createdAt | dateRelative}}</em>
+            ({{task.createdAt | date:'YYYY-MM-DD HH:mm:ss'}})
+        </div>
+
+        <div>
+            <strong>Updated:</strong>
+            <em>{{task.updatedAt | dateRelative}}</em>
+            ({{task.updatedAt | date:'YYYY-MM-DD HH:mm:ss'}})
+        </div>
+    </div>
+
+    <p *ngIf="task.detailsText">
+        {{task.detailsText}}
+    </p>
+</div>

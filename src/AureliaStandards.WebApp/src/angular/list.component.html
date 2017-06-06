@@ -1,0 +1,88 @@
+﻿<h2>
+    List
+    <em *ngIf="isDataLoading" class="small">(Loading...)</em>
+</h2>
+    
+<form>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input [disabled]="isDataLoading" [(ngModel)]="addTaskTitle"
+               type="text" id="title" name="title" placeholder="Title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="details">Details</label>
+        <textarea [disabled]="isDataLoading" [(ngModel)]="addTaskDetails"
+                        type="text" id="details" name="details" placeholder="Details" class="form-control"></textarea>
+    </div>
+    <button (click)="addTask()" [disabled]="isDataLoading || !addTaskTitle || addTaskTitle.length < 3"
+            type="submit" class="btn btn-default">Add</button>
+</form>
+
+<div *ngIf="activeTasksItems.length" class="list-group">
+    <h3>
+        Active items
+        <span *ngIf="activeTasksCount.length" class="badge">
+            {{activeTasksCount}}
+        </span>
+    </h3>
+
+    <div *ngFor="let task of activeTasksItems"
+         class="list-group-item {{task.isDone ? 'strike-through' : ''}}">
+        <h4>
+            <input [(ngModel)]="task.isDone" (change)="updateTask(task)"
+                   type="checkbox" id="checkbox-{{task.id}}" />
+            <label for="checkbox-{{task.id}}">
+                {{task.titleText}}
+            </label>
+
+            <a [routerLink]="['/details', task.id]"
+               class="btn btn-default btn-xs">
+                Show details &gt;
+            </a>
+        </h4>
+        <p if.bind="task.detailsText" title="{{task.detailsText}}">
+            {{task.detailsText}}
+        </p>
+        <div>
+            <span title="Updated at {{task.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}" class="label label-info">
+                Updated: {{task.updatedAt | dateRelative}}
+            </span>&nbsp;
+            <span class="label label-default">
+                Created: {{task.createdAt | date:'yyyy-MM-dd'}}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="doneTaskItems.length" class="list-group">
+    <h3>
+        Done items
+        <span *ngIf="doneTasksCount.length" class="badge">
+            {{doneTasksCount}}
+        </span>
+    </h3>
+
+    <div *ngFor="let task of doneTaskItems"
+         class="list-group-item list-group-item-success {{task.isDone ? 'strike-through' : ''}}">
+        <h4>
+            <input [(ngModel)]="task.isDone" (change)="updateTask(task)"
+                   type="checkbox" id="checkbox-{{task.id}}" />
+            <label for="checkbox-{{task.id}}">
+                {{task.titleText}}
+            </label>
+
+            <a [routerLink]="['/details', task.id]"
+               class="btn btn-default btn-xs">
+                Show details &gt;
+            </a>
+        </h4>
+        <div>
+            <span title="Updated at {{task.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}" class="label label-info">
+                Updated: {{task.updatedAt | dateRelative}}
+            </span>&nbsp;
+            <span class="label label-default">
+                Created: {{task.createdAt | date:'yyyy-MM-dd'}}
+            </span>
+        </div>
+    </div>
+</div>
