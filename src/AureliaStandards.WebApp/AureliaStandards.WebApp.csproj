@@ -6,25 +6,14 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="_archive\**" />
-    <Content Remove="_archive\**" />
-    <EmbeddedResource Remove="_archive\**" />
-    <None Remove="_archive\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="package-lock.json" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="1.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Server" Version="0.2.0-rtm-22752" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="1.1.1" />
+    <!--<PackageReference Include="Microsoft.AspNetCore.SignalR.Server" Version="0.2.0-rtm-22752" />-->
+    <!--<PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="1.1.1" />-->
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
@@ -32,15 +21,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="src\**" />
-    <Folder Include="wwwroot\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Remove="src\react\tasks-api.tsx" />
   </ItemGroup>
 
 </Project>
