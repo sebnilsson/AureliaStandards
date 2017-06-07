@@ -30,7 +30,7 @@ export class ListComponent {
     public set formTaskDetails(value: string) {
         this._formTaskDetails = value;
     }
-    
+
     public get formTaskTitle(): string {
         return this._formTaskTitle;
     }
@@ -38,7 +38,7 @@ export class ListComponent {
     public set formTaskTitle(value: string) {
         this._formTaskTitle = value;
     }
-    
+
     public get activeTasksCount(): number {
         return this.activeTasksItems.length;
     }
@@ -46,7 +46,7 @@ export class ListComponent {
     public get activeTasksItems(): ITaskItem[] {
         return this._tasksData.items.filter(x => !x.isDone);
     }
-    
+
     public get doneTasksCount(): number {
         return this.doneTaskItems.length;
     }
@@ -68,6 +68,29 @@ export class ListComponent {
 
                 this.formTaskTitle = '';
                 this.formTaskDetails = '';
+            })
+            .then(() => {
+                this.isDataLoading = false;
+            });
+    }
+
+    public deleteTask(task: ITaskItem): void {
+        let isConfirmed = confirm('Are you sure you want to delete this item?');
+        if (!isConfirmed) {
+            return;
+        }
+
+        this.isDataLoading = true;
+
+        this.api.deleteItem(task.id)
+            .then(() => {
+                let index = this._tasksData.items.indexOf(task);
+
+                if (index >= 0) {
+                    this._tasksData.items.splice(index, 1);
+                }
+
+                this.sortItems();
             })
             .then(() => {
                 this.isDataLoading = false;

@@ -133,7 +133,7 @@ export class List extends React.Component<IProps, IState> {
         this.setState({ isDataLoading: true });
 
         task.isDone = !task.isDone;
-        
+
         this.api.update(task)
             .then(data => {
                 let existingTask = this.state.tasksData.items.find(x => x.id === data.id);
@@ -152,6 +152,29 @@ export class List extends React.Component<IProps, IState> {
             });
     }
 
+    public deleteTask(task: ITaskItem): void {
+        let isConfirmed = confirm('Are you sure you want to delete this item?');
+        if (!isConfirmed) {
+            return;
+        }
+
+        this.setState({ isDataLoading: true });
+
+        this.api.deleteItem(task.id)
+            .then(() => {
+                let index = this.state.tasksData.items.indexOf(task);
+
+                if (index >= 0) {
+                    this.state.tasksData.items.splice(index, 1);
+                }
+
+                this.sortItems();
+            })
+            .then(() => {
+                this.setState({ isDataLoading: false });
+            });
+    }
+
     private getDateFormatRelative(value): string {
         return moment(value).fromNow();
     }
@@ -160,35 +183,39 @@ export class List extends React.Component<IProps, IState> {
         return moment(value).format(format);
     }
 
-    private getTasksEl(taskItems: ITaskItem[], tasksCount: number, titleText: string, isDoneItems: boolean = false): JSX.Element {
+    private getTasksEl(taskItems: ITaskItem[], tasksCount: number, titleText: string, isDoneTasks: boolean = false): JSX.Element {
         let activeTasksCountEl = tasksCount ? <span className="badge">{tasksCount}</span> : undefined;
 
-        let tasksItemsEls = taskItems.map(item => {
-            let detailsTextEl = (!isDoneItems && item.detailsText)
-                ? <p title="{item.detailsText}">
-                    {item.detailsText}
+        let tasksItemsEls = taskItems.map(task => {
+            let detailsTextEl = (!isDoneTasks && task.detailsText)
+                ? <p title="{task.detailsText}">
+                    {task.detailsText}
                 </p>
                 : undefined;
 
-            return <div className={item.isDone ? 'list-group-item list-group-item-success strike-through' : 'list-group-item'}>
+            return <div className={task.isDone ? 'list-group-item list-group-item-success strike-through' : 'list-group-item'}>
                 <h4>
-                    <input checked={item.isDone} onChange={() => this.updateTask(item)}
-                        type="checkbox" id="checkbox-{item.id}" />&nbsp;
-                        <label htmlFor="checkbox-{item.id}">
-                        {item.titleText}
+                    <input checked={task.isDone} onChange={() => this.updateTask(task)}
+                        type="checkbox" id={'checkbox-' + task.id} />&nbsp;
+                        <label htmlFor={'checkbox-' + task.id}>
+                        {task.titleText}
                     </label>
                     &nbsp;
                     <a className="btn btn-default btn-xs disabled">
                         Show details &gt;
-                </a>
+                    </a>
+                    &nbsp;                    
+                    <button onClick={() => this.deleteTask(task)} className="btn btn-danger btn-xs">
+                    Delete
+                </button>
                 </h4>
                 {detailsTextEl}
                 <div>
-                    <span title={'Updated at ' + this.getDateFormat(item.updatedAt, 'YYYY-MM-DD HH:mm:ss')} className="label label-info">
-                        Updated: {this.getDateFormatRelative(item.updatedAt)}
+                    <span title={'Updated at ' + this.getDateFormat(task.updatedAt, 'YYYY-MM-DD HH:mm:ss')} className="label label-info">
+                        Updated: {this.getDateFormatRelative(task.updatedAt)}
                     </span>&nbsp;&nbsp;
                     <span className="label label-default">
-                        Created: {this.getDateFormat(item.createdAt, 'YYYY-MM-DD')}
+                        Created: {this.getDateFormat(task.createdAt, 'YYYY-MM-DD')}
                     </span>
                 </div>
             </div>

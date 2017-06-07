@@ -44,6 +44,10 @@
                    class="btn btn-default btn-xs">
                     Show details &gt;
                 </a>
+
+                <button click.trigger="deleteTask(task)" class="btn btn-danger btn-xs">
+                    Delete
+                </button>
             </h4>
             <p if.bind="task.detailsText" title="${task.detailsText}">
                 ${task.detailsText}
@@ -80,6 +84,10 @@
                    class="btn btn-default btn-xs">
                     Show details &gt;
                 </a>
+
+                <button click.trigger="deleteTask(task)" class="btn btn-danger btn-xs">
+                    Delete
+                </button>
             </h4>
             <div>
                 <span title="Updated at ${task.updatedAt | dateFormat:'YYYY-MM-DD HH:mm:ss'}" class="label label-info">

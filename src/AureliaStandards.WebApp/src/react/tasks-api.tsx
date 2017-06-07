@@ -20,6 +20,14 @@ export class TasksApi {
         return addPromise;
     }
 
+    public deleteItem(id: string): Promise<any> {
+        let deletePromise = fetch(`${baseUrl}/${id}`,
+            {
+                method: 'DELETE'
+            });
+        return deletePromise;
+    }
+
     public getItem(id: string): Promise<ITaskItem> {
         let getPromise = fetch(`${baseUrl}/${id}`)
             .then(response => response.json() as ITaskItem);

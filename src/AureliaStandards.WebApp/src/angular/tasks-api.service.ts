@@ -20,6 +20,12 @@ export class TasksApiService {
         return addPromise;
     }
 
+    public deleteItem(id: string): Promise<any> {
+        let deletePromise = this.http.delete(`${baseUrl}/${id}`)
+            .toPromise();
+        return deletePromise;
+    }
+
     public getItem(id: string): Promise<ITaskItem> {
         let getPromise = this.http.get(`${baseUrl}/${id}`)
             .toPromise()

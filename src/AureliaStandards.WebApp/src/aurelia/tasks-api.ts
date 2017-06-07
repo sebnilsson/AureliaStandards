@@ -21,6 +21,11 @@ export class TasksApi {
         return addPromise;
     }
 
+    public deleteItem(id: string): Promise<any> {
+        let deletePromise = this.client.delete(`/${id}/`);
+        return deletePromise;
+    }
+
     public getItem(id: string): Promise<HttpResponseMessage> {
         let getPromise = this.client.get(`/${id}/`);
         return getPromise;

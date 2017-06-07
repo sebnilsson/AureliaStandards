@@ -76,6 +76,29 @@ export class List {
             });
     }
 
+    public deleteTask(task: ITaskItem): void {
+        let isConfirmed = confirm('Are you sure you want to delete this item?');
+        if (!isConfirmed) {
+            return;
+        }
+
+        this.isDataLoading = true;
+
+        this.api.deleteItem(task.id)
+            .then(() => {
+                let index = this._tasksData.items.indexOf(task);
+
+                if (index >= 0) {
+                    this._tasksData.items.splice(index, 1);
+                }
+
+                this.sortItems();
+            })
+            .then(() => {
+                this.isDataLoading = false;
+            });
+    }
+
     public getAllTasks(): void {
         this.isDataLoading = true;
 
