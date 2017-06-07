@@ -14,11 +14,16 @@ var angularDest = './wwwroot/dist/';
 var angularWebpackConfig = require('./webpack.angular.config.js');
 var angularWebpackConfigPath = path.resolve(__dirname, './webpack.angular.config.js');
 
+var reactSrc = './src/react/';
+var reactDest = './wwwroot/dist/';
+var reactWebpackConfig = require('./webpack.react.config.js');
+var reactWebpackConfigPath = path.resolve(__dirname, './webpack.react.config.js');
+
 gulp.task('default', ['build']);
 
-gulp.task('build', ['build.aurelia', 'build.angular']);
+gulp.task('build', ['build.aurelia', 'build.angular', 'build.react']);
 
-gulp.task('watch', ['watch.aurelia']);
+gulp.task('watch', ['watch.aurelia', 'watch.angular', 'watch.react']);
 
 gulp.task('build.aurelia',
     function() {
@@ -28,10 +33,17 @@ gulp.task('build.aurelia',
     });
 
 gulp.task('build.angular',
-    function () {
+    function() {
         return gulp.src(angularSrc)
             .pipe(gulpWebpack(angularWebpackConfig, webpack))
             .pipe(gulp.dest(angularDest));
+    });
+
+gulp.task('build.react',
+    function() {
+        return gulp.src(reactSrc)
+            .pipe(gulpWebpack(reactWebpackConfig, webpack))
+            .pipe(gulp.dest(reactDest));
     });
 
 gulp.task('watch.aurelia',
@@ -41,7 +53,13 @@ gulp.task('watch.aurelia',
     });
 
 gulp.task('watch.angular',
-    function () {
+    function() {
         var watchPaths = [angularWebpackConfigPath, `${angularSrc}**/*.*`];
         gulp.watch(watchPaths, ['build.angular']);
+    });
+
+gulp.task('watch.angular',
+    function() {
+        var watchPaths = [reactWebpackConfigPath, `${reactSrc}**/*.*`];
+        gulp.watch(watchPaths, ['build.react']);
     });

@@ -1,4 +1,18 @@
 @{
-    this.ViewData["Title"] = "React";
+    const string PageTitle = "React ToDo-app";
+
+    this.ViewData["Title"] = PageTitle;
 }
 
+<div class="container">
+    <h1>@PageTitle</h1>
+
+    <div id="react-app">Loading app...</div>
+</div>
+
+@section Scripts {
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+    @*<script type="text/javascript" src="~/dist/vendor.js" asp-append-version="true"></script>*@
+    <script type="text/javascript" src="~/dist/react-app.js" asp-append-version="true"></script>
+}

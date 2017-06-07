@@ -1,27 +1,28 @@
 ﻿<h2>
     List
     <em *ngIf="isDataLoading" class="small">(Loading...)</em>
+    <button *ngIf="!isDataLoading" (click)="getAllTasks()" class="btn btn-default btn-sm">Update</button>
 </h2>
     
 <form>
     <div class="form-group">
         <label for="title">Title</label>
-        <input [disabled]="isDataLoading" [(ngModel)]="addTaskTitle"
+        <input [disabled]="isDataLoading" [(ngModel)]="formTaskTitle"
                type="text" id="title" name="title" placeholder="Title" class="form-control">
     </div>
     <div class="form-group">
         <label for="details">Details</label>
-        <textarea [disabled]="isDataLoading" [(ngModel)]="addTaskDetails"
+        <textarea [disabled]="isDataLoading" [(ngModel)]="formTaskDetails"
                         type="text" id="details" name="details" placeholder="Details" class="form-control"></textarea>
     </div>
-    <button (click)="addTask()" [disabled]="isDataLoading || !addTaskTitle || addTaskTitle.length < 3"
+    <button (click)="addTask()" [disabled]="isDataLoading || !formTaskTitle || formTaskTitle.length < 3"
             type="submit" class="btn btn-default">Add</button>
 </form>
 
 <div *ngIf="activeTasksItems.length" class="list-group">
     <h3>
         Active items
-        <span *ngIf="activeTasksCount.length" class="badge">
+        <span *ngIf="activeTasksCount" class="badge">
             {{activeTasksCount}}
         </span>
     </h3>
@@ -57,7 +58,7 @@
 <div *ngIf="doneTaskItems.length" class="list-group">
     <h3>
         Done items
-        <span *ngIf="doneTasksCount.length" class="badge">
+        <span *ngIf="doneTasksCount" class="badge">
             {{doneTasksCount}}
         </span>
     </h3>

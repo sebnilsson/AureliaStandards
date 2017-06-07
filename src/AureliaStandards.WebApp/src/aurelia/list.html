@@ -5,27 +5,28 @@
     <h2>
         List
         <em if.bind="isDataLoading" class="small">(Loading...)</em>
+        <button if.bind="!isDataLoading" click.trigger="getAllTasks()" class="btn btn-default btn-sm">Update</button>
     </h2>
     
     <form>
         <div class="form-group">
             <label for="title">Title</label>
-            <input disabled.bind="isDataLoading" value.bind="addTaskTitle"
+            <input disabled.bind="isDataLoading" value.bind="formTaskTitle"
                    type="text" id="title" placeholder="Title" class="form-control">
         </div>
         <div class="form-group">
             <label for="details">Details</label>
-            <textarea disabled.bind="isDataLoading" value.bind="addTaskDetails"
+            <textarea disabled.bind="isDataLoading" value.bind="formTaskDetails"
                         type="text" id="details" placeholder="Details" class="form-control"></textarea>
         </div>
-        <button click.trigger="addTask()" disabled.bind="isDataLoading || !addTaskTitle || addTaskTitle.length < 3"
+        <button click.trigger="addTask()" disabled.bind="isDataLoading || !formTaskTitle || formTaskTitle.length < 3"
                 type="submit" class="btn btn-default">Add</button>
     </form>
     
     <div if.bind="activeTasksItems.length" class="list-group">
         <h3>
             Active items
-            <span if.bind="activeTasksCount.length" class="badge">
+            <span if.bind="activeTasksCount" class="badge">
                 ${activeTasksCount}
             </span>
         </h3>
@@ -61,7 +62,7 @@
     <div if.bind="doneTaskItems.length" class="list-group">
         <h3>
             Done items
-            <span if.bind="doneTasksCount.length" class="badge">
+            <span if.bind="doneTasksCount" class="badge">
                 ${doneTasksCount}
             </span>
         </h3>
@@ -82,7 +83,7 @@
             </h4>
             <div>
                 <span title="Updated at ${task.updatedAt | dateFormat:'YYYY-MM-DD HH:mm:ss'}" class="label label-info">
-                    Updated ${task.updatedAt | dateFormatRelative & signal:'date-format-relative'}
+                    Updated: ${task.updatedAt | dateFormatRelative & signal:'date-format-relative'}
                 </span>&nbsp;
                 <span class="label label-default">
                     Created: ${task.createdAt | dateFormat:'YYYY-MM-DD'}

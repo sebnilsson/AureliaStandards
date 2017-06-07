@@ -10,8 +10,8 @@ import { ITaskItem } from '../shared/task-item';
     // TestABC
 })
 export class ListComponent {
-    private _addTaskDetails: string;
-    private _addTaskTitle: string = '';
+    private _formTaskDetails: string;
+    private _formTaskTitle: string = '';
     private _tasksData: TasksData;
 
     constructor(tasksData: TasksData,
@@ -23,20 +23,20 @@ export class ListComponent {
         }
     }
 
-    public get addTaskDetails(): string {
-        return this._addTaskDetails;
+    public get formTaskDetails(): string {
+        return this._formTaskDetails;
     }
 
-    public set addTaskDetails(value: string) {
-        this._addTaskDetails = value;
+    public set formTaskDetails(value: string) {
+        this._formTaskDetails = value;
     }
     
-    public get addTaskTitle(): string {
-        return this._addTaskTitle;
+    public get formTaskTitle(): string {
+        return this._formTaskTitle;
     }
 
-    public set addTaskTitle(value: string) {
-        this._addTaskTitle = value;
+    public set formTaskTitle(value: string) {
+        this._formTaskTitle = value;
     }
     
     public get activeTasksCount(): number {
@@ -60,14 +60,14 @@ export class ListComponent {
     public addTask(): void {
         this.isDataLoading = true;
 
-        this.api.add(this.addTaskTitle, this.addTaskDetails)
+        this.api.add(this.formTaskTitle, this.formTaskDetails)
             .then(data => {
                 this._tasksData.items.push(data);
 
                 this.sortItems();
 
-                this.addTaskTitle = '';
-                this.addTaskDetails = '';
+                this.formTaskTitle = '';
+                this.formTaskDetails = '';
             })
             .then(() => {
                 this.isDataLoading = false;

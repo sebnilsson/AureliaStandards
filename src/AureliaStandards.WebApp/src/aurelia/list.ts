@@ -6,8 +6,8 @@ import { ITaskItem } from '../shared/task-item';
 
 @autoinject
 export class List {
-    private _addTaskDetails: string;
-    private _addTaskTitle: string;
+    private _formTaskDetails: string;
+    private _formTaskTitle: string;
     private _tasksData: TasksData;
 
     constructor(tasksData: TasksData,
@@ -17,24 +17,6 @@ export class List {
         if (!this._tasksData.items.length) {
             this.getAllTasks();
         }
-    }
-
-    @computedFrom('_addTaskDetails')
-    public get addTaskDetails(): string {
-        return this._addTaskDetails;
-    }
-
-    public set addTaskDetails(value: string) {
-        this._addTaskDetails = value;
-    }
-
-    @computedFrom('_addTaskTitle')
-    public get addTaskTitle(): string {
-        return this._addTaskTitle;
-    }
-
-    public set addTaskTitle(value: string) {
-        this._addTaskTitle = value;
     }
 
     @computedFrom('activeTasksItems')
@@ -55,12 +37,30 @@ export class List {
         return this._tasksData.items.filter(x => x.isDone);
     }
 
+    @computedFrom('_formTaskDetails')
+    public get formTaskDetails(): string {
+        return this._formTaskDetails;
+    }
+
+    public set formTaskDetails(value: string) {
+        this._formTaskDetails = value;
+    }
+
+    @computedFrom('_formTaskTitle')
+    public get formTaskTitle(): string {
+        return this._formTaskTitle;
+    }
+
+    public set formTaskTitle(value: string) {
+        this._formTaskTitle = value;
+    }
+
     public isDataLoading: boolean = false;
 
     public addTask(): void {
         this.isDataLoading = true;
 
-        this.api.add(this.addTaskTitle, this.addTaskDetails)
+        this.api.add(this.formTaskTitle, this.formTaskDetails)
             .then(data => {
                 let task = (data.content as ITaskItem);
 
@@ -68,8 +68,8 @@ export class List {
 
                 this.sortItems();
 
-                this.addTaskTitle = '';
-                this.addTaskDetails = '';
+                this.formTaskTitle = '';
+                this.formTaskDetails = '';
             })
             .then(() => {
                 this.isDataLoading = false;

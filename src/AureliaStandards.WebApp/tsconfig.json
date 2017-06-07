@@ -2,7 +2,10 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "es5",
-    "module": "es2015",
+    "module": "commonjs",
+    "jsx": "react",
+    "outDir": "./wwwroot/dist/",
+    "removeComments": true,
     "sourceMap": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -11,7 +14,12 @@
     "lib": [ "es2015", "dom" ],
     "types": [ "node" ]
   },
-  "exclude": ["bin", "dist", "wwwroot/dist", "node_modules"],
+  "exclude": [
+    "bin", "dist", "wwwroot/dist", "node_modules"
+  ],
+  "include": [
+    "./src/**/*"
+  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": { "rewriteTsconfig": false }

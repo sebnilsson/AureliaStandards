@@ -35,72 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="src\angular\details.component.html" />
-    <Folder Include="src\aurelia\about.html" />
-    <Folder Include="src\aurelia\about.ts" />
-    <Folder Include="src\aurelia\app-routing.ts" />
-    <Folder Include="src\aurelia\app.html" />
-    <Folder Include="src\aurelia\app.ts" />
-    <Folder Include="src\aurelia\date-format-relative.ts" />
-    <Folder Include="src\aurelia\date-format.ts" />
-    <Folder Include="src\aurelia\details.html" />
-    <Folder Include="src\aurelia\details.ts" />
-    <Folder Include="src\aurelia\list.html" />
-    <Folder Include="src\aurelia\list.ts" />
-    <Folder Include="src\aurelia\main.ts" />
-    <Folder Include="src\aurelia\nav-bar.html" />
-    <Folder Include="src\aurelia\tasks-api.ts" />
-    <Folder Include="src\shared\task-item.ts" />
-    <Folder Include="src\shared\tasks-data.ts" />
-    <Folder Include="wwwroot\content\styles.css" />
-    <Folder Include="wwwroot\dist\angular-app.js" />
-    <Folder Include="wwwroot\dist\aurelia-app.js" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Content Include="src\**" />
-    <Content Include="wwwroot\**" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Content Remove="src\angular\nav-bar.component.html" />
-    <Content Remove="src\angular\tasks-data.ts" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Remove="src\angular\about.component.ts" />
-    <Folder Remove="src\angular\app.component.html" />
-    <Folder Remove="src\angular\app.component.ts" />
-    <Folder Remove="src\angular\app.module.ts" />
-    <Folder Remove="src\angular\app.routing.ts" />
-    <Folder Remove="src\angular\details.component.ts" />
-    <Folder Remove="src\angular\list.component.html" />
-    <Folder Remove="src\angular\list.component.ts" />
-    <Folder Remove="src\angular\main.ts" />
-    <Folder Remove="src\angular\nav-bar.component.ts" />
+    <Folder Include="src\**" />
+    <Folder Include="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\content\styles.css" />
+    <Folder Remove="src\react\tasks-api.tsx" />
   </ItemGroup>
-
-  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec Command="npm install" />
-    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
-    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
-
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="wwwroot\dist\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
 
 </Project>
