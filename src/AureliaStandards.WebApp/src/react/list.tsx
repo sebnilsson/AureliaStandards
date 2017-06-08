@@ -26,7 +26,7 @@ export class List extends React.Component<IProps, IState> {
         this.state = {
             formTaskTitle: '',
             formTaskDetails: '',
-            isDataLoading: false,
+            isDataLoading: true,
             tasksData: props.tasksData
         };
 
@@ -70,26 +70,30 @@ export class List extends React.Component<IProps, IState> {
         let doneTasksEl = this.getTasksEl(this.doneTasksItems, this.doneTasksCount, 'Done items', true /*isDoneItems*/);
 
         return <div>
-            <h2>
-                List {isLoadingEl} {updateButtonEl}
-            </h2>
-            <form onSubmit={this.addTask}>
-                <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input value={this.state.formTaskTitle} onChange={this.handleformTaskTitleChange} disabled={this.state.isDataLoading}
-                        type="text" id="title" placeholder="Title" className="form-control" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="details">Details</label>
-                    <textarea value={this.state.formTaskDetails} onChange={this.handleformTaskDetailsChange} disabled={this.state.isDataLoading}
+                   <h2>
+                       List {isLoadingEl} {updateButtonEl}
+                   </h2>
+                   <form onSubmit={this.addTask}>
+                       <div className="form-group">
+                           <label htmlFor="title">Title</label>
+                           <input value={this.state.formTaskTitle} onChange={this.handleformTaskTitleChange}
+                                  disabled={this.state.isDataLoading}
+                                  type="text" id="title" placeholder="Title" className="form-control"/>
+                       </div>
+                       <div className="form-group">
+                           <label htmlFor="details">Details</label>
+                           <textarea value={this.state.formTaskDetails} onChange={this.handleformTaskDetailsChange}
+                               disabled={this.state.isDataLoading}
                         id="details" placeholder="Details" className="form-control"></textarea>
-                </div>
-                <button disabled={this.state.isDataLoading || !this.state.formTaskTitle || this.state.formTaskTitle.length < 3}
-                    type="submit" className="btn btn-default">Add</button>
-            </form>
-            {activeTasksEl}
-            {doneTasksEl}
-        </div>;
+                       </div>
+                       <button disabled={this.state.isDataLoading ||
+                           !this.state.formTaskTitle ||
+                           this.state.formTaskTitle.length < 3}
+                               type="submit" className="btn btn-default">Add</button>
+                   </form>
+                   {activeTasksEl}
+                   {doneTasksEl}
+               </div>;
     }
 
     public addTask(event): void {
@@ -183,52 +187,58 @@ export class List extends React.Component<IProps, IState> {
         return moment(value).format(format);
     }
 
-    private getTasksEl(taskItems: ITaskItem[], tasksCount: number, titleText: string, isDoneTasks: boolean = false): JSX.Element {
+    private getTasksEl(taskItems: ITaskItem[],
+        tasksCount: number,
+        titleText: string,
+        isDoneTasks: boolean = false): JSX.Element {
         let activeTasksCountEl = tasksCount ? <span className="badge">{tasksCount}</span> : undefined;
 
         let tasksItemsEls = taskItems.map(task => {
             let detailsTextEl = (!isDoneTasks && task.detailsText)
                 ? <p title="{task.detailsText}">
-                    {task.detailsText}
-                </p>
+                      {task.detailsText}
+                  </p>
                 : undefined;
 
-            return <div className={task.isDone ? 'list-group-item list-group-item-success strike-through' : 'list-group-item'}>
-                <h4>
-                    <input checked={task.isDone} onChange={() => this.updateTask(task)}
-                        type="checkbox" id={'checkbox-' + task.id} />&nbsp;
-                        <label htmlFor={'checkbox-' + task.id}>
-                        {task.titleText}
-                    </label>
-                    &nbsp;
-                    <a className="btn btn-default btn-xs disabled">
-                        Show details &gt;
-                    </a>
-                    &nbsp;                    
-                    <button onClick={() => this.deleteTask(task)} className="btn btn-danger btn-xs">
-                    Delete
-                </button>
-                </h4>
-                {detailsTextEl}
-                <div>
-                    <span title={'Updated at ' + this.getDateFormat(task.updatedAt, 'YYYY-MM-DD HH:mm:ss')} className="label label-info">
-                        Updated: {this.getDateFormatRelative(task.updatedAt)}
-                    </span>&nbsp;&nbsp;
-                    <span className="label label-default">
-                        Created: {this.getDateFormat(task.createdAt, 'YYYY-MM-DD')}
-                    </span>
-                </div>
-            </div>
+            return <div className={task.isDone
+                ? 'list-group-item list-group-item-success strike-through'
+                : 'list-group-item'}>
+                       <h4>
+                           <input checked={task.isDone} onChange={() => this.updateTask(task)}
+                                  type="checkbox" id={'checkbox-' + task.id}/>&nbsp;
+                           <label htmlFor={'checkbox-' + task.id}>
+                               {task.titleText}
+                           </label>
+                           &nbsp;
+                           <a className="btn btn-default btn-xs disabled">
+                               Show details &gt;
+                           </a>
+                           &nbsp;
+                           <button onClick={() => this.deleteTask(task)} className="btn btn-danger btn-xs">
+                               Delete
+                           </button>
+                       </h4>
+                       {detailsTextEl}
+                       <div>
+                           <span title={'Updated at ' +
+                               this.getDateFormat(task.updatedAt, 'YYYY-MM-DD HH:mm:ss')} className="label label-info">
+                               Updated: {this.getDateFormatRelative(task.updatedAt)}
+                           </span>&nbsp;&nbsp;
+                           <span className="label label-default">
+                               Created: {this.getDateFormat(task.createdAt, 'YYYY-MM-DD')}
+                           </span>
+                       </div>
+                   </div>
         });
 
         let tasksEl = taskItems.length
             ? <div className="list-group">
-                <h3>
-                    {titleText} {activeTasksCountEl}
-                </h3>
+                  <h3>
+                      {titleText} {activeTasksCountEl}
+                  </h3>
 
-                {tasksItemsEls}
-            </div>
+                  {tasksItemsEls}
+              </div>
             : undefined;
         return tasksEl;
     }

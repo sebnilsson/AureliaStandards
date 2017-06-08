@@ -3,27 +3,16 @@ const path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const srcDir = path.resolve(__dirname, './src/angular/');
-const sharedDir = path.resolve(__dirname, './src/shared/');
 const distDir = path.resolve(__dirname, './wwwroot/dist/');
-const nodeModulesDir = path.resolve(__dirname, './node_modules');
-
-//console.log(`__dirname: '${__dirname}'`);
-//console.log(`srcDir: '${srcDir}'`);
-//console.log(`distDir: '${distDir}'`);
-//console.log(`nodeModulesDir: '${nodeModulesDir}'`);
 
 module.exports = {
     entry: { 'angular-app': ['./src/angular/main.ts'] },
     output: {
         path: distDir,
-        publicPath: '/',
         filename: '[name].js'
     },
     resolve: {
-        extensions: ['.ts', '.js'],
-        //modules: [sharedDir, srcDir, 'node_modules']
-        //modules: ['node_modules']
+        extensions: ['.ts', '.js']
     },
     module: {
         rules: [

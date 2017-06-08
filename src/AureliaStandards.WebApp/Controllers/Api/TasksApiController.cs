@@ -33,7 +33,7 @@ namespace AureliaStandards.WebApp.Controllers.Api
         [HttpGet("{id:guid}", Name = "Get")]
         public async Task<TaskItem> Get(Guid id)
         {
-            await Task.Delay(1000);
+            await Task.Delay(800);
 
             try
             {
@@ -48,16 +48,20 @@ namespace AureliaStandards.WebApp.Controllers.Api
 
         // POST: api/tasks
         [HttpPost]
-        public TaskItem Post([FromBody] TaskItem task)
+        public async Task<TaskItem> Post([FromBody] TaskItem task)
         {
+            await Task.Delay(250);
+
             var addedOrUpdatedTask = this._repository.AddOrUpdate(task);
             return addedOrUpdatedTask;
         }
 
         // PUT: api/tasks/5
         [HttpPut("{id}")]
-        public TaskItem Put(Guid id, [FromBody] TaskItem task)
+        public async Task<TaskItem> Put(Guid id, [FromBody] TaskItem task)
         {
+            await Task.Delay(250);
+
             task.Id = id;
 
             var addedOrUpdatedTask = this._repository.AddOrUpdate(task);

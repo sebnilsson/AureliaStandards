@@ -22,8 +22,8 @@ export class App extends React.Component<any, IState> {
 
     public render(): JSX.Element {
         return <div>
-            <NavBar />
-            <List tasksData={this.state.tasksData} tasksApi={this.state.tasksApi} />
-        </div>;
+                   <NavBar/>
+                   <List tasksData={this.state.tasksData} tasksApi={this.state.tasksApi}/>
+               </div>;
     }
 }
